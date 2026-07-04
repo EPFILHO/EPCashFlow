@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="description"
-          content="Baixe o EP CashFlow, uma ferramenta local em HTML para acompanhamento real de resultados, saldo, aportes, retiradas, custos e performance.">
+          content="EP CashFlow: ferramenta local em HTML para controle real de resultados, saldo, aportes, retiradas, custos e performance, diretamente no navegador.">
 
     <style>
       :root {
@@ -33,7 +33,7 @@
       .card {
         background: rgba(15, 23, 42, 0.96);
         border-radius: 18px;
-        padding: 2.5rem 3rem;
+        padding: 2.5rem 3rem 2rem 3rem;
         box-shadow: 0 28px 70px rgba(0, 0, 0, 0.78);
         border: 1px solid rgba(148, 163, 184, 0.45);
         display: grid;
@@ -44,13 +44,13 @@
       @media (max-width: 800px) {
         .card {
           grid-template-columns: minmax(0, 1fr);
-          padding: 2.2rem 1.8rem;
+          padding: 2.2rem 1.8rem 1.8rem 1.8rem;
         }
       }
 
       h1 {
         margin: 0 0 0.5rem 0;
-        font-size: 2.2rem;
+        font-size: 2.3rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: #facc15;
@@ -58,7 +58,7 @@
 
       h2 {
         margin: 0 0 1.4rem 0;
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         color: #e5e7eb;
       }
 
@@ -69,7 +69,7 @@
       }
 
       .tagline {
-        font-size: 1.02rem;
+        font-size: 1.04rem;
         color: #cbd5f5;
         margin-bottom: 1.3rem;
       }
@@ -133,7 +133,7 @@
       .side {
         border-radius: 14px;
         border: 1px dashed rgba(148, 163, 184, 0.5);
-        padding: 1.4rem 1.5rem;
+        padding: 1.4rem 1.5rem 1.1rem 1.5rem;
         background: radial-gradient(circle at top left, rgba(234, 179, 8, 0.14), rgba(15, 23, 42, 0.96));
       }
 
@@ -163,25 +163,16 @@
         color: #6b7280;
       }
 
-      .disclaimer-box {
-        margin-top: 1rem;
-        padding: 0.8rem 1rem;
-        border-radius: 10px;
-        border: 1px solid rgba(248, 250, 252, 0.1);
-        background: rgba(15, 23, 42, 0.9);
-        font-size: 0.82rem;
-        color: #9ca3af;
-      }
-
-      .disclaimer-title {
-        font-weight: 600;
-        color: #f97316;
-        margin-bottom: 0.3rem;
-      }
-
       .highlight-price {
         color: #facc15;
         font-weight: 600;
+      }
+
+      .footer {
+        margin-top: 1.2rem;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #6b7280;
       }
     </style>
   </head>
@@ -194,14 +185,14 @@
           <h2>Controle real de resultados e fluxo de caixa</h2>
 
           <p class="tagline">
-            Ferramenta local em HTML para acompanhar seu saldo, ganhos, perdas, aportes, retiradas, custos e performance,
-            diretamente no navegador.
+            Acompanhe seu saldo, aportes, retiradas, custos e performance em uma ferramenta local em HTML,
+            pensada para traders e investidores que querem clareza sobre a conta.
           </p>
 
           <ul class="feature-list">
-            <li><span class="feature-bullet"></span>Acompanhe a evolução de saldo, aportes, retiradas, custos e resultados ao longo do tempo.</li>
-            <li><span class="feature-bullet"></span>Organize operações, ajustes, depósitos/saques e observações em um único lugar.</li>
-            <li><span class="feature-bullet"></span>Dados salvos localmente no seu navegador/dispositivo, sem envio para servidores externos.</li>
+            <li><span class="feature-bullet"></span>Veja a evolução de saldo e resultados ao longo do tempo.</li>
+            <li><span class="feature-bullet"></span>Organize aportes, retiradas, ajustes, depósitos/saques e observações.</li>
+            <li><span class="feature-bullet"></span>Funciona localmente no navegador: sem cadastro, sem login, sem coleta de dados.</li>
           </ul>
 
           <div class="cta-area">
@@ -217,42 +208,37 @@
           </div>
         </div>
 
-        <!-- Coluna lateral: uso, pagamento e aviso -->
+        <!-- Coluna lateral: uso, pagamento e branding -->
         <div class="side">
-          <h3>Uso e pagamento</h3>
+          <h3>Uso e modelo de pagamento</h3>
 
           <p>
-            Use o EP CashFlow à vontade. O app é baseado em confiança:
-            você usa, eu confio que você fará um pagamento único sugerido de
-            <span class="highlight-price">R$ 9,99</span>.
+            Baixe, use no seu dia a dia e acompanhe o histórico da sua conta com muito mais clareza.
           </p>
+
+          <ul>
+            <li><strong>Uso local:</strong> o arquivo roda direto no seu navegador, sem instalação.</li>
+            <li><strong>Backup por sua conta:</strong> faça cópias do arquivo para preservar seu histórico.</li>
+            <li><strong>Atualizações:</strong> novas versões podem ser baixadas no repositório do projeto.</li>
+          </ul>
 
           <p>
-            Simples assim. Sem assinaturas. Sem boletos. Sem bloqueio de recursos. Sem coleta de dados.
+            O EP CashFlow adota um modelo baseado em confiança: você usa, avalia o valor que ele entrega
+            e, se fizer sentido para você, realiza um pagamento único sugerido de
+            <span class="highlight-price">R$ 9,99</span> via Pix.
           </p>
-
-          <p>
-            Para pagar, utilize o QR Code Pix informado dentro do próprio app, na seção de Uso e Pagamento.
-          </p>
-
-          <div class="disclaimer-box">
-            <div class="disclaimer-title">Disclaimer</div>
-            <p>
-              O EP CashFlow é uma ferramenta de acompanhamento de resultados e fluxo de caixa.
-              Ele não recomenda investimentos, não indica operações e não substitui análise profissional.
-            </p>
-            <p>
-              Operar no mercado financeiro envolve riscos e pode resultar em perda parcial ou total do capital.
-              As decisões de operação, investimento e gestão de risco são de responsabilidade exclusiva do usuário.
-            </p>
-          </div>
 
           <p class="footnote">
+            O QR Code Pix e os detalhes de pagamento estão disponíveis dentro do próprio app, na seção de Uso e Pagamento.
             Se o navegador abrir o arquivo em vez de baixar, use
             <span class="kbd">Ctrl</span> + <span class="kbd">S</span>
-            para salvar a página como arquivo <code>EPCashFlow.html</code>.
+            para salvar a página como <code>EPCashFlow.html</code>.
           </p>
         </div>
+      </div>
+
+      <div class="footer">
+        © EP Filho – EP CashFlow. Todos os direitos reservados.
       </div>
     </div>
 
