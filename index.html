@@ -52,12 +52,12 @@
         margin: 0 0 0.5rem 0;
         font-size: 2.3rem;
         letter-spacing: 0.08em;
-        text-transform: uppercase;
+        text-transform: none;
         color: #facc15;
       }
 
       h2 {
-        margin: 0 0 1.4rem 0;
+        margin: 0 0 0.9rem 0;
         font-size: 1.3rem;
         color: #e5e7eb;
       }
@@ -71,11 +71,11 @@
       .tagline {
         font-size: 1.04rem;
         color: #cbd5f5;
-        margin-bottom: 1.3rem;
+        margin-bottom: 1.0rem;
       }
 
       .pain {
-        margin-bottom: 1.2rem;
+        margin-bottom: 0.9rem;
         font-size: 0.98rem;
         color: #f97316;
       }
@@ -179,14 +179,14 @@
           <h1>EP CashFlow</h1>
           <h2>Controle real de resultados e fluxo de caixa</h2>
 
-          <p class="tagline">
-            Acompanhe seu saldo, aportes, retiradas, custos e performance em uma ferramenta local em HTML,
-            pensada para traders e investidores que querem clareza sobre a conta.
-          </p>
-
           <p class="pain">
             Cansado de não saber exatamente quanto ganhou, perdeu ou retirou da conta ao longo do tempo?
             O EP CashFlow reúne tudo em um só lugar, de forma simples e visual.
+          </p>
+
+          <p class="tagline">
+            Acompanhe seu saldo, aportes, retiradas, custos e performance em uma ferramenta local em HTML,
+            pensada para traders e investidores que querem clareza sobre a conta.
           </p>
 
           <ul class="feature-list">
@@ -202,8 +202,8 @@
               BAIXAR EP CashFlow (HTML)
             </a>
 
-            <p class="status" id="status-text">
-              O download deve iniciar automaticamente em alguns segundos. Se não iniciar, clique no botão verde acima.
+            <p class="status">
+              Clique no botão verde acima para baixar o EP CashFlow. Depois é só abrir o arquivo no navegador.
             </p>
           </div>
         </div>
@@ -232,23 +232,8 @@
       </div>
 
       <div class="footer">
-        © EP Filho – EP CashFlow. Todos os direitos reservados.
+        © 2026 EP Filho – EP CashFlow. Todos os direitos reservados.
       </div>
     </div>
-
-    <script>
-      // Tentativa de download automático ao carregar
-      window.addEventListener('load', function () {
-        var btn = document.getElementById('download-btn');
-        var status = document.getElementById('status-text');
-
-        try {
-          btn.click();
-          status.textContent = "Se o download não tiver iniciado, clique no botão verde acima.";
-        } catch (e) {
-          status.textContent = "Clique no botão verde acima para iniciar o download.";
-        }
-      });
-    </script>
   </body>
 </html>
