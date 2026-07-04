@@ -2,37 +2,153 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8">
-    <title>Baixar EPCashFlow.html</title>
+    <title>Download EPCashFlow.html</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
+        color: #e5e7eb;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .card {
+        background: rgba(15, 23, 42, 0.92);
+        border-radius: 16px;
+        padding: 2.5rem 2.8rem;
+        max-width: 640px;
+        width: 90%;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        text-align: center;
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+        font-size: 2rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #facc15;
+      }
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.25rem;
+        color: #e5e7eb;
+      }
+
+      p.lead {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        color: #9ca3af;
+      }
+
+      ol {
+        text-align: left;
+        margin: 0 auto 1.8rem auto;
+        padding-left: 1.2rem;
+        max-width: 480px;
+        font-size: 0.98rem;
+      }
+
+      li {
+        margin-bottom: 0.8rem;
+      }
+
+      .btn-area {
+        margin-top: 1.2rem;
+      }
+
+      a.download-btn {
+        display: inline-block;
+        padding: 0.9rem 1.9rem;
+        border-radius: 999px;
+        text-decoration: none;
+        background: #22c55e;
+        color: #022c22;
+        font-weight: 700;
+        font-size: 1.06rem;
+        box-shadow: 0 12px 28px rgba(34, 197, 94, 0.5);
+      }
+
+      a.download-btn:hover {
+        background: #16a34a;
+      }
+
+      .status {
+        margin-top: 1.5rem;
+        font-size: 0.95rem;
+        color: #9ca3af;
+      }
+
+      .kbd {
+        display: inline-block;
+        padding: 0.12rem 0.4rem;
+        margin: 0 0.12rem;
+        border-radius: 4px;
+        background: #020617;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        font-size: 0.85rem;
+      }
+    </style>
   </head>
-  <body style="font-family: sans-serif; background-color: #ffffff; color: #000000;">
+  <body>
+    <div class="card">
+      <h1>DOWNLOAD EPCASHFLOW</h1>
+      <h2>Seu arquivo HTML está pronto para baixar</h2>
 
-    <h1 style="color: #d32f2f;">
-      ATENÇÃO: LEIA ANTES DE BAIXAR
-    </h1>
+      <p class="lead">
+        O download deve iniciar automaticamente em alguns segundos.
+        Se não iniciar, siga os passos abaixo e use o botão de download.
+      </p>
 
-    <h2>Como baixar o arquivo <code>EPCashFlow.html</code></h2>
+      <ol>
+        <li><strong>1.</strong> Se o download não começar sozinho, POSICIONE o mouse sobre o botão verde abaixo.</li>
+        <li><strong>2.</strong> Clique com o <strong>botão esquerdo</strong> para iniciar o download imediatamente.</li>
+        <li><strong>3.</strong> Se o navegador apenas abrir o arquivo, use
+          <span class="kbd">Ctrl</span> + <span class="kbd">S</span>
+          para salvar a página como arquivo <code>EPCashFlow.html</code>.
+        </li>
+      </ol>
 
-    <ol>
-      <li><strong>POSICIONE</strong> o mouse em cima do botão de download abaixo (não clique com o botão esquerdo).</li>
-      <li>Clique com o <strong>botão direito</strong> do mouse em cima do botão.</li>
-      <li>Escolha <strong>“Salvar link como…”</strong> ou <strong>“Salvar destino como…”</strong>.</li>
-      <li>Escolha a pasta onde deseja salvar e confirme.</li>
-    </ol>
+      <div class="btn-area">
+        <a id="download-btn"
+           class="download-btn"
+           href="https://drive.google.com/uc?export=download&id=1a_5-J_Ix4lNpbWi4efLiY8WnoM3iQn7d">
+          BAIXAR EPCashFlow.html
+        </a>
+      </div>
 
-    <p><strong>Botão de download:</strong></p>
+      <p class="status" id="status-text">
+        Tentando iniciar o download automaticamente...
+      </p>
+    </div>
 
-    <p>
-      <a href="https://drive.google.com/uc?export=download&id=1a_5-J_Ix4lNpbWi4efLiY8WnoM3iQn7d"
-         style="display:inline-block;padding:10px 20px;background:#2ea44f;color:#fff;
-                font-weight:bold;text-decoration:none;border-radius:4px;">
-        BOTÃO DE DOWNLOAD EPCashFlow.html (Google Drive)
-      </a>
-    </p>
+    <script>
+      // dispara o clique automático após carregar a página
+      window.addEventListener('load', function () {
+        var btn = document.getElementById('download-btn');
+        var status = document.getElementById('status-text');
 
-    <p>
-      Se você clicar com o botão esquerdo e abrir alguma tela do Google,
-      use <strong>Ctrl + S</strong> ou procure a opção de download para salvar o arquivo.
-    </p>
-
+        try {
+          btn.click();
+          status.textContent = "Se o download não tiver iniciado, clique no botão verde acima.";
+        } catch (e) {
+          status.textContent = "Clique no botão verde acima para iniciar o download.";
+        }
+      });
+    </script>
   </body>
 </html>
