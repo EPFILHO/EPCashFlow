@@ -589,6 +589,52 @@ textarea{resize:vertical;min-height:76px;line-height:1.5}
 .chart-switch-btn:hover:not(.active){
   color:var(--text);
 }
+.custom-range{
+  display:none;
+  align-items:center;
+  gap:6px;
+  padding:4px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:999px;
+  flex-wrap:wrap;
+}
+.custom-range.show{display:flex}
+.custom-range span{
+  font-size:.68rem;
+  color:var(--text3);
+  font-weight:700;
+  font-family:var(--mono);
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.custom-range input{
+  width:128px!important;
+  padding:5px 8px!important;
+  border-radius:999px!important;
+  font-size:.72rem!important;
+  font-family:var(--mono)!important;
+}
+.custom-range .btn{
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:.7rem;
+}
+input[type="date"]{
+  color-scheme:light dark;
+}
+input[type="date"]::-webkit-calendar-picker-indicator{
+  cursor:pointer;
+  opacity:.72;
+}
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator{
+  filter:invert(1) brightness(1.65);
+  opacity:.9;
+}
+[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator{
+  filter:none;
+  opacity:.72;
+}
 
 .stat-card{
   padding:15px 16px;
@@ -1121,11 +1167,17 @@ input[type=file]::-webkit-file-upload-button{
                 <button class="chart-switch-btn" data-range-btn="current" onclick="setDashChartRange('current')" title="Mês calendário atual">Atual</button>
                 <button class="chart-switch-btn" data-range-btn="previous" onclick="setDashChartRange('previous')" title="Mês calendário anterior">Anterior</button>
                 <button class="chart-switch-btn" data-range-btn="30d" onclick="setDashChartRange('30d')" title="Últimos 30 dias">30D</button>
-                <button class="chart-switch-btn" data-range-btn="90d" onclick="setDashChartRange('90d')" title="Últimos 90 dias">90D</button>
                 <button class="chart-switch-btn" data-range-btn="6m" onclick="setDashChartRange('6m')" title="Últimos 6 meses">6M</button>
-                <button class="chart-switch-btn" data-range-btn="9m" onclick="setDashChartRange('9m')" title="Últimos 9 meses">9M</button>
                 <button class="chart-switch-btn" data-range-btn="12m" onclick="setDashChartRange('12m')" title="Últimos 12 meses">12M</button>
                 <button class="chart-switch-btn active" data-range-btn="all" onclick="setDashChartRange('all')" title="Histórico completo">Tudo</button>
+                <button class="chart-switch-btn" data-range-btn="custom" onclick="setDashChartRange('custom')" title="Escolher datas">Personalizado</button>
+              </div>
+              <div class="custom-range" data-custom-range>
+                <span>De</span>
+                <input type="date" data-custom-start title="Data inicial personalizada">
+                <span>Até</span>
+                <input type="date" data-custom-end title="Data final personalizada">
+                <button class="btn btn-ghost btn-sm" type="button" onclick="applyCustomDashRange(this)">Aplicar</button>
               </div>
               <span class="chart-badge" id="balBadge" style="background:var(--green-glow);color:var(--green)">—</span>
             </div>
@@ -1248,20 +1300,28 @@ input[type=file]::-webkit-file-upload-button{
     <!-- INSIGHTS -->
     <section id="sec-relatorios" class="section">
       <div class="card" style="padding:14px 18px;margin-bottom:14px">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px">
           <div>
             <div class="card-title" style="margin-bottom:2px">Período dos Insights</div>
-            <div style="font-size:.76rem;color:var(--text2)">Escolha o período que quer analisar. Atual mostra o mês em andamento; Anterior mostra o mês passado fechado; 30D, 90D, 6M, 9M e 12M mostram os períodos mais recentes; Tudo mostra todo o histórico.</div>
+            <div style="font-size:.76rem;color:var(--text2)">Escolha o período que quer analisar. Atual mostra o mês em andamento; Anterior mostra o mês passado fechado; 30D, 6M e 12M mostram períodos recentes; Personalizado permite escolher datas; Tudo mostra todo o histórico.</div>
           </div>
-          <div class="chart-switch" aria-label="Período dos insights">
-            <button class="chart-switch-btn" data-range-btn="current" onclick="setDashChartRange('current')" title="Mês calendário atual">Atual</button>
-            <button class="chart-switch-btn" data-range-btn="previous" onclick="setDashChartRange('previous')" title="Mês calendário anterior">Anterior</button>
-            <button class="chart-switch-btn" data-range-btn="30d" onclick="setDashChartRange('30d')" title="Últimos 30 dias">30D</button>
-            <button class="chart-switch-btn" data-range-btn="90d" onclick="setDashChartRange('90d')" title="Últimos 90 dias">90D</button>
-            <button class="chart-switch-btn" data-range-btn="6m" onclick="setDashChartRange('6m')" title="Últimos 6 meses">6M</button>
-            <button class="chart-switch-btn" data-range-btn="9m" onclick="setDashChartRange('9m')" title="Últimos 9 meses">9M</button>
-            <button class="chart-switch-btn" data-range-btn="12m" onclick="setDashChartRange('12m')" title="Últimos 12 meses">12M</button>
-            <button class="chart-switch-btn active" data-range-btn="all" onclick="setDashChartRange('all')" title="Histórico completo">Tudo</button>
+          <div class="chart-actions" style="justify-content:flex-start">
+            <div class="chart-switch" aria-label="Período dos insights">
+              <button class="chart-switch-btn" data-range-btn="current" onclick="setDashChartRange('current')" title="Mês calendário atual">Atual</button>
+              <button class="chart-switch-btn" data-range-btn="previous" onclick="setDashChartRange('previous')" title="Mês calendário anterior">Anterior</button>
+              <button class="chart-switch-btn" data-range-btn="30d" onclick="setDashChartRange('30d')" title="Últimos 30 dias">30D</button>
+              <button class="chart-switch-btn" data-range-btn="6m" onclick="setDashChartRange('6m')" title="Últimos 6 meses">6M</button>
+              <button class="chart-switch-btn" data-range-btn="12m" onclick="setDashChartRange('12m')" title="Últimos 12 meses">12M</button>
+              <button class="chart-switch-btn active" data-range-btn="all" onclick="setDashChartRange('all')" title="Histórico completo">Tudo</button>
+              <button class="chart-switch-btn" data-range-btn="custom" onclick="setDashChartRange('custom')" title="Escolher datas">Personalizado</button>
+            </div>
+            <div class="custom-range" data-custom-range>
+              <span>De</span>
+              <input type="date" data-custom-start title="Data inicial personalizada">
+              <span>Até</span>
+              <input type="date" data-custom-end title="Data final personalizada">
+              <button class="btn btn-ghost btn-sm" type="button" onclick="applyCustomDashRange(this)">Aplicar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1473,9 +1533,9 @@ input[type=file]::-webkit-file-upload-button{
         <div class="about-card">
           <div class="about-card-title">Projeto e versões</div>
           <ul class="about-list">
-            <li>Versão atual: <strong>v1.0.1</strong>.</li>
-            <li>Novas versões podem ser baixadas no GitHub do projeto.</li>
-            <li><a class="about-link" href="https://github.com/EPFILHO/EPCashFlow" target="_blank" rel="noopener noreferrer">github.com/EPFILHO/EPCashFlow</a></li>
+            <li>Versão atual: <strong>v1.0.2</strong>.</li>
+            <li>Novas versões podem ser baixadas na GitHub Page do projeto.</li>
+            <li><a class="about-link" href="https://epfilho.github.io/EPCashFlow/" target="_blank" rel="noopener noreferrer">epfilho.github.io/EPCashFlow/</a></li>
             <li>Contato: <a class="about-link" href="mailto:epfilho73@gmail.com">epfilho73@gmail.com</a></li>
           </ul>
         </div>
@@ -1521,6 +1581,7 @@ input[type=file]::-webkit-file-upload-button{
         <div class="legal-text">
           <p><strong>Antes de usar o EP CashFlow, leia e confirme os pontos abaixo.</strong></p>
           <p>O EP CashFlow é uma ferramenta local para acompanhamento de seus resultados, saldo, aportes, retiradas, custos e performance.</p>
+          <p>O EP CashFlow não foi testado em Smartphones/Tablets, por isso recomenda-se o uso apenas em Desktops/Laptops.</p>
           <p>O app não recomenda investimentos, não indica operações e não substitui análise profissional.</p>
           <p>Operar no mercado financeiro envolve riscos e pode resultar em perda parcial ou total do capital.</p>
           <p>Seus dados ficam salvos localmente no seu navegador/dispositivo. O app não possui login, não envia seus lançamentos para servidor externo e não coleta seus dados operacionais.</p>
@@ -1534,7 +1595,7 @@ input[type=file]::-webkit-file-upload-button{
       <div class="about-card">
         <div class="about-footer">
           <div>© <span id="aboutYear">2026</span> EP Filho. Todos os direitos reservados.</div>
-          <div class="about-version">EP CashFlow · v1.0.1</div>
+          <div class="about-version">EP CashFlow · v1.0.2</div>
         </div>
       </div>
     </section>
@@ -1545,17 +1606,21 @@ input[type=file]::-webkit-file-upload-button{
         <div class="about-kicker">Perguntas frequentes</div>
         <div class="about-title">Q&amp;A</div>
         <p class="about-lead">
-          Respostas rápidas sobre uso, dados, backups, múltiplas contas, termos, privacidade, licença, pagamento e principais recursos do EP CashFlow.
+          Respostas rápidas sobre uso, dados, backups, períodos, compatibilidade, termos, privacidade, licença, pagamento e principais recursos do EP CashFlow.
         </p>
       </div>
 
       <div class="qa-grid">
         <div class="qa-item">
           <div class="qa-q">Preciso de internet para usar?</div>
-          <div class="qa-a">O EP CashFlow foi pensado para uso local: seus dados ficam no navegador e não são salvos em nuvem. A internet pode ser necessária para carregar recursos externos na primeira abertura e para acessar links como o GitHub.</div>
+          <div class="qa-a">O EP CashFlow foi pensado para uso local: seus dados ficam no navegador e não são salvos em nuvem. A internet pode ser necessária para carregar recursos externos na primeira abertura e para acessar links como a GitHub Page do projeto.</div>
         </div>
 
-        <div class="qa-item">
+                <div class="qa-item">
+          <div class="qa-q">Posso usar o EP CashFlow no celular ou tablet?</div>
+          <div class="qa-a">A versão atual foi pensada e recomendada para uso em Desktops/Laptops. O EP CashFlow não foi testado oficialmente em Smartphones/Tablets. Algumas funções podem até funcionar em navegadores móveis modernos, mas a experiência pode ser limitada, principalmente em tabelas, gráficos, importação/exportação de arquivos e backups.</div>
+        </div>
+<div class="qa-item">
           <div class="qa-q">O app coleta ou envia meus dados?</div>
           <div class="qa-a">Não. O EP CashFlow não envia seus lançamentos para servidor externo. Os dados ficam no seu navegador, usando armazenamento local/IndexedDB.</div>
         </div>
@@ -1586,8 +1651,8 @@ input[type=file]::-webkit-file-upload-button{
         </div>
 
         <div class="qa-item">
-          <div class="qa-q">Como funcionam os períodos?</div>
-          <div class="qa-a">Atual mostra o mês em andamento. Anterior mostra o mês passado fechado. 30D, 90D, 6M, 9M e 12M mostram janelas móveis contadas a partir de hoje. Tudo mostra todo o histórico salvo.</div>
+          <div class="qa-q">Como funcionam os períodos dos gráficos e Insights?</div>
+          <div class="qa-a">Atual mostra o mês em andamento. Anterior mostra o mês passado fechado. 30D, 6M e 12M mostram janelas móveis contadas para trás a partir de hoje. Tudo mostra todo o histórico salvo. Personalizado permite escolher uma data inicial e uma data final. O período escolhido é sincronizado entre o Dashboard e os Insights.</div>
         </div>
 
         <div class="qa-item">
@@ -1614,7 +1679,7 @@ input[type=file]::-webkit-file-upload-button{
         </div>
         <div class="qa-item">
           <div class="qa-q">Onde baixo novas versões?</div>
-          <div class="qa-a">Novas versões podem ser baixadas no GitHub: <a class="about-link" href="https://github.com/EPFILHO/EPCashFlow" target="_blank" rel="noopener noreferrer">github.com/EPFILHO/EPCashFlow</a>. Antes de substituir seu arquivo atual, faça um Backup JSON.</div>
+          <div class="qa-a">Novas versões podem ser baixadas na GitHub Page do projeto: <a class="about-link" href="https://epfilho.github.io/EPCashFlow/" target="_blank" rel="noopener noreferrer">epfilho.github.io/EPCashFlow/</a>. Antes de substituir seu arquivo atual, faça um Backup JSON.</div>
         </div>
         <div class="qa-item">
           <div class="qa-q">Como entro em contato?</div>
@@ -1650,6 +1715,7 @@ input[type=file]::-webkit-file-upload-button{
     <div class="terms-body">
       <p><strong>Antes de usar o EP CashFlow, leia e confirme os pontos abaixo.</strong></p>
       <p>O EP CashFlow é uma ferramenta local para acompanhamento de seus resultados, saldo, aportes, retiradas, custos e performance.</p>
+      <p>O EP CashFlow não foi testado em Smartphones/Tablets, por isso recomenda-se o uso apenas em Desktops/Laptops.</p>
       <p>O app não recomenda investimentos, não indica operações e não substitui análise profissional.</p>
       <p>Operar no mercado financeiro envolve riscos e pode resultar em perda parcial ou total do capital.</p>
       <p>Seus dados ficam salvos localmente no seu navegador/dispositivo. O app não possui login, não envia seus lançamentos para servidor externo e não coleta seus dados operacionais.</p>
@@ -1671,8 +1737,8 @@ input[type=file]::-webkit-file-upload-button{
 /* ═══════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════ */
-const APP_VERSION = '1.0.1';
-const TERMS_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
+const TERMS_VERSION = '1.0.2';
 const APP_STORAGE_NS = 'EPCashFlow_v1';
 const LEGACY_IDB_NAME = 'CashFlowDB'; // used only to import data saved by older versions
 const LS_LEGACY_KEY = 'tv2_state';    // old localStorage key — for migration only
@@ -2059,7 +2125,9 @@ function swapLabelLower(){
    CALCULATIONS
 ═══════════════════════════════════════════ */
 const PREF_BAL_CHART_MODE = scopedKey('balanceChartMode'); // 'with' = com saques; 'without' = ignora saques no gráfico
-const PREF_DASH_CHART_RANGE = scopedKey('dashChartRange'); // timeframe global: 'current', 'previous', '30d', '90d', '6m', '9m', '12m', 'all'
+const PREF_DASH_CHART_RANGE = scopedKey('dashChartRange'); // período global: 'current', 'previous', '30d', '6m', '12m', 'custom', 'all'
+const PREF_CUSTOM_RANGE_START = scopedKey('customRangeStart');
+const PREF_CUSTOM_RANGE_END = scopedKey('customRangeEnd');
 
 function getBalanceChartMode(){
   return localStorage.getItem(PREF_BAL_CHART_MODE) === 'without' ? 'without' : 'with';
@@ -2070,23 +2138,19 @@ function setBalanceChartMode(mode){
 }
 
 function dashRangeOptions(){
-  return ['current','previous','30d','90d','6m','9m','12m','all'];
+  return ['current','previous','30d','6m','12m','custom','all'];
 }
 function normalizeDashRange(range){
   // Compatibilidade com versões anteriores salvas no navegador.
   if(range === '1m') return '30d';
-  if(range === '3m') return '90d';
+  if(range === '3m' || range === '90d' || range === '9m') return 'all';
   return range;
 }
 function getDashChartRange(){
   const r = normalizeDashRange(localStorage.getItem(PREF_DASH_CHART_RANGE) || 'all');
   return dashRangeOptions().includes(r) ? r : 'all';
 }
-function setDashChartRange(range){
-  const normalized = normalizeDashRange(range);
-  localStorage.setItem(PREF_DASH_CHART_RANGE, dashRangeOptions().includes(normalized) ? normalized : 'all');
-  syncRangeButtons();
-
+function refreshDashViews(){
   if(document.getElementById('sec-dashboard')?.classList.contains('active')){
     renderDashboard();
   }
@@ -2094,17 +2158,59 @@ function setDashChartRange(range){
     renderReports();
   }
 }
+function setDashChartRange(range){
+  const normalized = normalizeDashRange(range);
+  localStorage.setItem(PREF_DASH_CHART_RANGE, dashRangeOptions().includes(normalized) ? normalized : 'all');
+  syncRangeButtons();
+  refreshDashViews();
+}
+function getCustomRangeStart(){
+  try{return localStorage.getItem(PREF_CUSTOM_RANGE_START)||'';}catch(e){return '';}
+}
+function getCustomRangeEnd(){
+  try{return localStorage.getItem(PREF_CUSTOM_RANGE_END)||'';}catch(e){return '';}
+}
+function setCustomRangeValues(start,end){
+  try{
+    if(start) localStorage.setItem(PREF_CUSTOM_RANGE_START,start); else localStorage.removeItem(PREF_CUSTOM_RANGE_START);
+    if(end) localStorage.setItem(PREF_CUSTOM_RANGE_END,end); else localStorage.removeItem(PREF_CUSTOM_RANGE_END);
+  }catch(e){}
+}
+function syncCustomRangeInputs(){
+  const start=getCustomRangeStart();
+  const end=getCustomRangeEnd();
+  const isCustom=getDashChartRange()==='custom';
+  document.querySelectorAll('[data-custom-range]').forEach(box=>{
+    box.classList.toggle('show', isCustom);
+    const s=box.querySelector('[data-custom-start]');
+    const e=box.querySelector('[data-custom-end]');
+    if(s) s.value=start;
+    if(e) e.value=end;
+  });
+}
+function applyCustomDashRange(btn){
+  const box=btn?.closest?.('[data-custom-range]') || document.querySelector('[data-custom-range]');
+  const start=box?.querySelector('[data-custom-start]')?.value || '';
+  const end=box?.querySelector('[data-custom-end]')?.value || '';
+  if(start && end && start>end){
+    toast('A data inicial não pode ser maior que a data final.','error');
+    return;
+  }
+  setCustomRangeValues(start,end);
+  localStorage.setItem(PREF_DASH_CHART_RANGE,'custom');
+  syncRangeButtons();
+  refreshDashViews();
+}
 function syncRangeButtons(){
   const r=getDashChartRange();
   document.querySelectorAll('[data-range-btn]').forEach(btn=>{
     btn.classList.toggle('active', normalizeDashRange(btn.dataset.rangeBtn) === r);
   });
+  syncCustomRangeInputs();
 }
 function dashRangeDays(range){
   return range === '30d' ? 30
-       : range === '90d' ? 90
        : range === '6m' ? 180
-       : range === '9m' ? 270
        : range === '12m' ? 365
        : null;
 }
@@ -2112,10 +2218,9 @@ function dashRangeLabel(range){
   return range === 'current' ? 'Atual'
        : range === 'previous' ? 'Anterior'
        : range === '30d' ? '30D'
-       : range === '90d' ? '90D'
        : range === '6m' ? '6M'
-       : range === '9m' ? '9M'
        : range === '12m' ? '12M'
+       : range === 'custom' ? 'Personalizado'
        : 'Tudo';
 }
 function ymd(d){
@@ -2124,13 +2229,28 @@ function ymd(d){
   const day=String(d.getDate()).padStart(2,'0');
   return `${y}-${m}-${day}`;
 }
+function ymdAddDays(dateStr, days){
+  if(!dateStr) return null;
+  const [y,m,d]=dateStr.split('-').map(Number);
+  if(!y || !m || !d) return null;
+  const dt=new Date(y,m-1,d);
+  dt.setDate(dt.getDate()+days);
+  return ymd(dt);
+}
 function dashRangeWindow(data, range){
   range = normalizeDashRange(range);
   if(range==='all') return {start:null,end:null};
 
-  // Timeframes usam a data de hoje como referência:
+  if(range === 'custom'){
+    return {
+      start:getCustomRangeStart() || null,
+      end:ymdAddDays(getCustomRangeEnd(),1)
+    };
+  }
+
+  // Períodos rápidos usam a data de hoje como referência:
   // Atual = mês calendário atual; Anterior = mês calendário anterior completo;
-  // 30D+ = janelas móveis contadas para trás a partir de hoje.
+  // 30D, 6M e 12M = janelas móveis contadas para trás a partir de hoje.
   const anchor = new Date();
   anchor.setHours(0,0,0,0);
 
