@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://epfilho.github.io/EPCashFlow/sitemap.xml
