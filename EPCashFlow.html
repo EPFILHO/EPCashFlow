@@ -1027,6 +1027,13 @@ input[type="date"]::-webkit-clear-button{
 .about-info-value{text-align:right;min-width:0;overflow-wrap:anywhere}
 .about-link{color:var(--accent2);text-decoration:none;font-weight:700}
 .about-link:hover{text-decoration:underline}
+.disclaimer-card{border-color:rgba(245,158,11,.22);background:linear-gradient(180deg,var(--surface),rgba(245,158,11,.035))}
+.disclaimer-strip{margin-bottom:14px;padding:16px 18px}
+.disclaimer-strip .legal-text{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.disclaimer-mark{
+  width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  background:rgba(245,158,11,.10);color:var(--gold);font-weight:900;flex-shrink:0;
+}
 .legal-text{color:var(--text2);font-size:.84rem;line-height:1.7}
 .legal-text p{margin-bottom:10px}
 .about-details{padding:0;overflow:hidden}
@@ -1118,6 +1125,7 @@ input[type="date"]::-webkit-clear-button{
 @media(max-width:700px){
   .pix-support,.about-payment-card .pix-support{grid-template-columns:1fr}
   .pix-qr-slot{min-height:180px}
+  .disclaimer-strip .legal-text{grid-template-columns:1fr}
 }
 
 
@@ -1317,7 +1325,7 @@ body.tour-open .section.active{animation:none}
 .backup-status-title{font-size:.9rem;font-weight:700;color:var(--text)}
 .backup-status-desc{font-size:.76rem;color:var(--text2);margin-top:2px;line-height:1.45}
 .backup-info-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  display:grid;grid-template-columns:repeat(2,minmax(150px,1fr)) minmax(300px,2fr);
   gap:10px;margin-top:12px;
 }
 .backup-info-item{
@@ -1331,6 +1339,7 @@ body.tour-open .section.active{animation:none}
 .backup-info-item strong{
   color:var(--text);font-family:var(--mono);font-size:.8rem;word-break:break-word;
 }
+.backup-info-item-file{min-width:0}
 
 /* ─── BACKUP ZONE ─── */
 .danger-zone{
@@ -1351,10 +1360,15 @@ body.tour-open .section.active{animation:none}
 .mobile-toggle svg{width:20px;height:20px;stroke-width:2}
 
 /* ─── RESPONSIVE ─── */
-@media(max-width:1200px){.kpi-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:1200px){
+  .kpi-grid{grid-template-columns:repeat(4,1fr)}
+  .backup-info-grid{grid-template-columns:repeat(2,minmax(150px,1fr))}
+  .backup-info-item-file{grid-column:1 / -1}
+}
 @media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:800px){
   .kpi-grid{grid-template-columns:1fr 1fr}
+  .backup-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .chart-row{grid-template-columns:1fr}
   .sidebar{transform:translateX(-100%)}
   .sidebar.mobile-open{transform:translateX(0);width:240px}
@@ -1367,7 +1381,10 @@ body.tour-open .section.active{animation:none}
   .kpi-card{padding:16px}
   .kpi-value{font-size:1.2rem}
 }
-@media(max-width:480px){.kpi-grid{grid-template-columns:1fr}}
+@media(max-width:480px){
+  .kpi-grid,.backup-info-grid{grid-template-columns:1fr}
+  .backup-info-item-file{grid-column:auto}
+}
 
 /* ─── MISC ─── */
 .tag{
@@ -1915,6 +1932,8 @@ input[type=file]::file-selector-button{
         </div>
 
         <div class="terms-note terms-note-spaced">
+          <div><strong>Onde abrir o app:</strong> <span id="backupFileLocationNotice"></span></div>
+          <br>
           <strong>Importante:</strong> seus dados ficam salvos no navegador/dispositivo. Eles podem ser perdidos se você limpar dados do site, cookies/armazenamento local, usar aba anônima/privativa, trocar de navegador, trocar de computador, trocar de perfil do navegador ou abrir outra cópia do arquivo HTML.
           <br><br>
           Para sua segurança, exporte regularmente o <strong>Backup JSON</strong>, principalmente antes de trocar de versão, limpar o navegador ou mudar de computador. O arquivo baixado vai para a pasta padrão de downloads do navegador, exceto se o navegador estiver configurado para perguntar onde salvar. Guardar esse arquivo em local seguro é responsabilidade do usuário.
@@ -1929,35 +1948,14 @@ input[type=file]::file-selector-button{
             <span>Alterações desde o último backup</span>
             <strong id="changesSinceBackup">0</strong>
           </div>
-          <div class="backup-info-item">
-            <span>Nome sugerido do arquivo</span>
-            <strong id="backupSuggestedFile">—</strong>
+          <div class="backup-info-item backup-info-item-file">
+            <span class="has-tooltip" title="Qualquer alteração manual no nome do arquivo pelo usuário deixará este campo desatualizado.">Nome do Último Arquivo de Backup Gerado</span>
+            <strong id="backupFileName">—</strong>
           </div>
         </div>
 
         <p class="supporting-note">
           O EP CashFlow salva automaticamente no navegador. O arquivo JSON só é baixado quando você clicar no botão de backup e normalmente vai para a pasta padrão de downloads do seu navegador.
-        </p>
-      </div>
-
-      <!-- Export -->
-      <div class="card">
-        <div class="card-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Exportações
-        </div>
-        <div class="button-row">
-          <button class="btn btn-ghost" type="button" data-action="export-json">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Baixar Backup JSON
-          </button>
-          <button class="btn btn-ghost" type="button" data-action="export-csv">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Exportar CSV
-          </button>
-        </div>
-        <p class="supporting-note">
-          💡 Use o JSON para restaurar todos os dados e levar seu histórico para outra versão/cópia do app. O CSV é apenas para análise em planilhas e não limpa o status de backup pendente.
         </p>
       </div>
 
@@ -1972,7 +1970,24 @@ input[type=file]::file-selector-button{
           <input type="file" id="importFile" accept=".json,application/json">
         </div>
         <p class="supporting-note supporting-note-compact">
-          ⚠ A importação substitui todas as contas atuais. Exporte um backup antes se necessário.
+          ⚠ A importação substitui todas as contas atuais. Confira se você selecionou o arquivo correto e exporte um backup dos dados atuais antes, se necessário.
+        </p>
+      </div>
+
+      <!-- Spreadsheet export -->
+      <div class="card">
+        <div class="card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Exportar para planilha
+        </div>
+        <div class="button-row">
+          <button class="btn btn-ghost" type="button" data-action="export-csv">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Exportar CSV
+          </button>
+        </div>
+        <p class="supporting-note">
+          💡 O CSV é voltado à análise em planilhas. Ele não substitui o Backup JSON e não limpa o status de backup pendente.
         </p>
       </div>
 
@@ -2080,6 +2095,16 @@ input[type=file]::file-selector-button{
               <div class="about-info-label">Contato</div>
               <div class="about-info-value"><a class="about-link" href="mailto:epfilho73@gmail.com">epfilho73@gmail.com</a></div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-card disclaimer-card disclaimer-strip">
+        <div class="legal-text">
+          <div class="disclaimer-mark">!</div>
+          <div>
+            <p><strong>Importante: onde guardar e abrir o app</strong></p>
+            <div id="aboutFileLocationBody"></div>
           </div>
         </div>
       </div>
@@ -2581,7 +2606,18 @@ input[type=file]::file-selector-button{
 (function(root){
   'use strict';
 
+  const fileLocationGuidance=Object.freeze({
+    question:'Onde devo guardar e abrir o arquivo EPCashFlow.html?',
+    shortNotice:'Guarde o EPCashFlow.html em uma pasta própria e abra sempre o arquivo pelo mesmo local, usando o mesmo navegador e perfil.',
+    paragraphs:[
+      'Guarde o EPCashFlow.html em uma pasta própria e abra sempre o arquivo pelo mesmo local, usando o mesmo navegador e perfil.',
+      'Mover ou renomear o HTML, abrir outra cópia, trocar de navegador ou usar outro perfil pode fazer o app acessar outro armazenamento local, e os dados anteriores podem deixar de aparecer.',
+      'Ao atualizar o app, exporte primeiro um Backup JSON. Depois, substitua o arquivo antigo mantendo, preferencialmente, o mesmo nome e local. Se você abrir a nova versão em outro local, utilize o Backup JSON para restaurar os dados.'
+    ]
+  });
+
   const content={
+    fileLocationGuidance,
     terms:[
       'O EP CashFlow é uma ferramenta gratuita e local para organização e acompanhamento de fluxo financeiro operacional.',
       'O app ajuda a acompanhar resultados, saldo, aportes, retiradas, custos e performance com base nas informações que você inserir.',
@@ -2640,6 +2676,7 @@ input[type=file]::file-selector-button{
       {
         title:'Primeiros passos e privacidade',
         items:[
+          [fileLocationGuidance.question,fileLocationGuidance.paragraphs.join('<br><br>')],
           ['Preciso de internet para usar?','O uso e o armazenamento são locais. A internet pode ser necessária para carregar recursos visuais externos e para abrir links do projeto, mas seus lançamentos não são enviados para a nuvem.'],
           ['Posso usar no celular ou tablet?','A experiência é recomendada para Desktop e Laptop. Navegadores móveis podem executar parte do app, mas tabelas, gráficos, importação, exportação e backup não fazem parte do ambiente oficialmente testado.'],
           ['Onde meus dados ficam salvos?','No armazenamento local do navegador, usando IndexedDB. O app não possui login nem sincronização em nuvem. Para levar os dados a outra versão, navegador ou computador, exporte e importe um Backup JSON.'],
@@ -2714,6 +2751,10 @@ input[type=file]::file-selector-button{
   }
 
   function renderStaticContent(){
+    const backupNotice=document.getElementById('backupFileLocationNotice');
+    if(backupNotice) backupNotice.textContent=fileLocationGuidance.shortNotice;
+    const aboutGuidance=document.getElementById('aboutFileLocationBody');
+    if(aboutGuidance) aboutGuidance.innerHTML=fileLocationGuidance.paragraphs.map(text=>`<p>${text}</p>`).join('');
     const faq=document.getElementById('qaList');
     if(faq){
       faq.innerHTML=content.faqGroups.map(group=>`
@@ -2773,6 +2814,7 @@ const IDB_NAME      = `CashFlowDB_${APP_SCOPE}`;
 const IDB_VERSION   = 1;
 const STORE_STATE   = 'appState';    // single-record object store
 const STATE_ID      = 'main';        // the one record key
+const BACKUP_META_ID = 'backupMetadata';
 const DEFAULT_CONFIG = {
   name:'Minha Conta',
   broker:'Corretora',
@@ -3002,26 +3044,32 @@ function dbOpen(){
   });
 }
 
-/** Read the single state record. Returns Promise<object|null>. */
-function dbRead(){
+function dbReadRecord(id){
   return dbOpen().then(db => new Promise((resolve, reject)=>{
     const tx  = db.transaction(STORE_STATE, 'readonly');
-    const req = tx.objectStore(STORE_STATE).get(STATE_ID);
+    const req = tx.objectStore(STORE_STATE).get(id);
     req.onsuccess = () => resolve(req.result || null);
     req.onerror   = () => reject(req.error);
   }));
 }
 
-/** Write the state record. Returns Promise<void>. */
-function dbWrite(record){
+function dbWriteRecord(id, record){
   return dbOpen().then(db => new Promise((resolve, reject)=>{
     const tx  = db.transaction(STORE_STATE, 'readwrite');
-    tx.objectStore(STORE_STATE).put({ id: STATE_ID, ...record });
+    tx.objectStore(STORE_STATE).put({ id, ...record });
     tx.oncomplete = () => resolve();
     tx.onerror = () => reject(tx.error);
     tx.onabort = () => reject(tx.error || new Error('Gravação cancelada pelo IndexedDB.'));
   }));
 }
+
+/** Read and write the application state record. */
+function dbRead(){ return dbReadRecord(STATE_ID); }
+function dbWrite(record){ return dbWriteRecord(STATE_ID,record); }
+
+/** Backup metadata is local and intentionally excluded from exported JSON. */
+function dbReadBackupMetadata(){ return dbReadRecord(BACKUP_META_ID); }
+function dbWriteBackupMetadata(record){ return dbWriteRecord(BACKUP_META_ID,record); }
 
 /** Delete every record (for "wipe all" action). Returns Promise<void>. */
 function dbClear(){
@@ -4822,6 +4870,21 @@ document.getElementById('cfgForm').addEventListener('submit',function(e){
 const PREF_BACKUP_DIRTY   = scopedKey('backupDirty');
 const PREF_BACKUP_CHANGES = scopedKey('backupChanges');
 const PREF_LAST_BACKUP_AT = scopedKey('lastBackupAt');
+let lastBackupFileName='';
+
+function normalizeBackupFileName(value){
+  const fileName=String(value||'').trim();
+  return fileName.length<=255 && /\.json$/i.test(fileName) ? fileName : '';
+}
+async function loadBackupMetadata(){
+  try{
+    const metadata=await dbReadBackupMetadata();
+    lastBackupFileName=normalizeBackupFileName(metadata?.lastFileName);
+  }catch(error){
+    console.warn('[CashFlow] backup metadata read error',error);
+    lastBackupFileName='';
+  }
+}
 
 function getBackupChanges(){
   const n=parseInt(localStorage.getItem(PREF_BACKUP_CHANGES)||'0',10);
@@ -4835,11 +4898,16 @@ function formatDateTimeBR(iso){
   if(!iso) return 'Nunca exportado nesta cópia';
   const d=new Date(iso);
   if(isNaN(d)) return 'Nunca exportado nesta cópia';
-  return d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  return d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
 function markBackupDirty(step=1){
   const next=getBackupChanges()+Math.max(1,step||1);
   localStorage.setItem(PREF_BACKUP_CHANGES,String(next));
+  localStorage.setItem(PREF_BACKUP_DIRTY,'1');
+  updateBackupStatusUI();
+}
+function markImportedDataPending(){
+  localStorage.setItem(PREF_BACKUP_CHANGES,'1');
   localStorage.setItem(PREF_BACKUP_DIRTY,'1');
   updateBackupStatusUI();
 }
@@ -4853,6 +4921,7 @@ function resetBackupTracking(){
   localStorage.removeItem(PREF_BACKUP_CHANGES);
   localStorage.removeItem(PREF_BACKUP_DIRTY);
   localStorage.removeItem(PREF_LAST_BACKUP_AT);
+  lastBackupFileName='';
   updateBackupStatusUI();
 }
 function updateBackupStatusUI(){
@@ -4866,7 +4935,7 @@ function updateBackupStatusUI(){
   const desc=document.getElementById('backupStatusDesc');
   const lastEl=document.getElementById('lastBackupAt');
   const changesEl=document.getElementById('changesSinceBackup');
-  const fileEl=document.getElementById('backupSuggestedFile');
+  const fileEl=document.getElementById('backupFileName');
 
   if(card) card.classList.toggle('pending',dirty);
   if(icon) icon.textContent=dirty?'!':'✓';
@@ -4882,13 +4951,13 @@ function updateBackupStatusUI(){
   }
   if(lastEl) lastEl.textContent=formatDateTimeBR(last);
   if(changesEl) changesEl.textContent=changes>0 ? String(changes) : (dirty ? 'Recomendado' : '0');
-  if(fileEl) fileEl.textContent=backupFileName('json', true);
+  if(fileEl) fileEl.textContent=lastBackupFileName || 'Nenhum backup JSON gerado nesta cópia';
 }
 
 /* ═══════════════════════════════════════════
    BACKUP — MANUAL EXPORT & IMPORT
 ═══════════════════════════════════════════ */
-function exportJSON(){
+async function exportJSON(){
   if(tourDemoMode){
     toast('Conclua o tutorial para liberar o backup dos seus dados reais.','info');
     return;
@@ -4902,8 +4971,17 @@ function exportJSON(){
     accounts:serializeAppState().accounts
   };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
-  dlBlob(blob,backupFileName('json', true));
+  const fileName=backupFileName(true);
+  dlBlob(blob,fileName);
+  lastBackupFileName=fileName;
   clearBackupPending();
+  try{
+    await dbWriteBackupMetadata({lastFileName:fileName});
+  }catch(error){
+    console.error('[CashFlow] backup metadata write error',error);
+    toast('Backup baixado, mas o nome do arquivo não pôde ser registrado.','error');
+    return;
+  }
   toast('Backup JSON com todas as contas baixado e status atualizado.','info');
 }
 function csvCell(value){
@@ -4944,7 +5022,7 @@ function exportCSV(){
   });
   const csv=[hdr.join(';'),...rows.map(r=>r.map(csvCell).join(';'))].join('\n');
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
-  dlBlob(blob,backupFileName('csv', true));
+  dlBlob(blob,csvFileName(true));
   toast('CSV exportado com lançamentos de todas as contas.','info');
 }
 function dlBlob(blob,name){
@@ -4956,7 +5034,7 @@ function today(){return ymd(new Date())}
 function nowStamp(){
   const d=new Date();
   const pad=n=>String(n).padStart(2,'0');
-  return `${ymd(d)}_${pad(d.getHours())}${pad(d.getMinutes())}`;
+  return `${ymd(d)}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 }
 function cleanFilePart(value,fallback){
   const raw=String(value||'').trim();
@@ -4982,9 +5060,13 @@ function backupBaseName(){
     cleanFilePart(id.name,'Conta')
   ].join('_');
 }
-function backupFileName(ext,withTime=true){
+function backupFileName(withTime=true){
   const stamp=withTime ? nowStamp() : today();
-  return `${backupBaseName()}_${stamp}.${ext}`;
+  return `EPCashFlow_Backup_${stamp}.json`;
+}
+function csvFileName(withTime=true){
+  const stamp=withTime ? nowStamp() : today();
+  return `${backupBaseName()}_${stamp}.csv`;
 }
 function closeAccountMenu(){
   const wrap=document.getElementById('accountSwitcher');
@@ -5210,7 +5292,7 @@ function renderAccountsManager(){
 function importJSON(ev){
   const file=ev.target.files[0];if(!file) return;
   const reader=new FileReader();
-  reader.onload=async function(e){
+  reader.onload=function(e){
     try{
       const data=JSON.parse(e.target.result);
       const validation=CashFlowDomain.backup.validatePayload(data);
@@ -5221,19 +5303,32 @@ function importJSON(ev){
       const imported=normalizeAppState(data);
       if(imported && Array.isArray(imported.accounts) && imported.accounts.length){
         imported.legalConsent=normalizeLegalConsent(APP.legalConsent);
-        await _saveQueue.catch(()=>{});
-        await dbWrite({
-          schemaVersion:2,
-          activeAccountId:imported.activeAccountId,
-          legalConsent:imported.legalConsent,
-          accounts:imported.accounts
+        const accountCount=imported.accounts.length;
+        const entryCount=imported.accounts.reduce((sum,account)=>sum+(Array.isArray(account.entries)?account.entries.length:0),0);
+        openHtmlModal({
+          title:'Importar Backup JSON?',
+          bodyHtml:`
+            <p>O arquivo <strong>${escHTML(file.name)}</strong> contém ${accountCount} conta${accountCount===1?'':'s'} e ${entryCount} lançamento${entryCount===1?'':'s'}.</p>
+            <p class="modal-warning-text">A importação substituirá todas as contas e lançamentos atualmente armazenados nesta cópia do EP CashFlow. Essa ação não poderá ser desfeita pelo app.</p>
+            <p class="modal-warning-text">Se necessário, cancele agora e exporte um backup dos dados atuais antes de continuar.</p>`,
+          buttonLabel:'Importar e substituir',
+          buttonClass:'btn-danger',
+          callback:async ()=>{
+            await _saveQueue.catch(()=>{});
+            await dbWrite({
+              schemaVersion:2,
+              activeAccountId:imported.activeAccountId,
+              legalConsent:imported.legalConsent,
+              accounts:imported.accounts
+            });
+            installAppState(imported);
+            markImportedDataPending();
+            updateAccountUI();
+            renderDashboard();
+            nav('dashboard');
+            toast(`${APP.accounts.length} conta${APP.accounts.length===1?'':'s'} e ${totalEntriesAllAccounts()} lançamentos importados com sucesso.`,'success');
+          }
         });
-        installAppState(imported);
-        clearBackupPending();
-        updateAccountUI();
-        renderDashboard();
-        nav('dashboard');
-        toast(`${APP.accounts.length} conta${APP.accounts.length===1?'':'s'} e ${totalEntriesAllAccounts()} lançamentos importados com sucesso.`,'success');
       } else {
         toast('Arquivo inválido. Verifique o formato JSON.','error');
       }
@@ -5279,6 +5374,12 @@ function prepareModal(title,cb,btnLabel='Confirmar',btnClass='btn-danger'){
 function openModal(title,body,cb,btnLabel='Confirmar',btnClass='btn-danger'){
   document.getElementById('modalBody').textContent=body;
   const {btn}=prepareModal(title,cb,btnLabel,btnClass);
+  btn.focus();
+}
+
+function openHtmlModal({title,bodyHtml,callback,buttonLabel='Confirmar',buttonClass='btn-danger'}){
+  document.getElementById('modalBody').innerHTML=bodyHtml;
+  const {btn}=prepareModal(title,callback,buttonLabel,buttonClass);
   btn.focus();
 }
 
@@ -5744,6 +5845,7 @@ function handleActionClick(event){
   document.getElementById('pgName').textContent = 'Carregando…';
 
   await load(); // async — waits for IDB read
+  await loadBackupMetadata();
   tryEnablePersistentStorage(); // tentativa silenciosa; Backup JSON continua indispensável
 
   initTheme();
